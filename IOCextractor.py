@@ -9,8 +9,8 @@
 import re
 import sys
 
-from Tkinter import *
-from tkFileDialog import askopenfilename, asksaveasfilename, askdirectory
+from tkinter import *
+from tkinter.filedialog import askopenfilename, asksaveasfilename, askdirectory
 from distutils.version import LooseVersion
 
 try:
@@ -29,14 +29,14 @@ try:
         raise ImportError("python-cybox must be v2.0.1.0 or greater")
     
 except Exception as e:
-    print "ERROR: Could not load python-cybox. Will not be able to export IOCs in CybOX 2.0 format.\nException:[%s]" % (str(e))
+    print("ERROR: Could not load python-cybox. Will not be able to export IOCs in CybOX 2.0 format.\nException:[%s]" % (str(e)))
     python_cybox_available = False
     
 try:
     from ioc_writer import ioc_api, ioc_common
     ioc_writer_available = True
-except ImportError, e:
-    print 'ERROR: Could not load ioc_writer.  Will not be able to export IOCs in OpenIOC 1.1 format.'
+except ImportError as e:
+    print('ERROR: Could not load ioc_writer.  Will not be able to export IOCs in OpenIOC 1.1 format.')
     ioc_writer_available = False
 
 tags = ['md5', 'ipv4', 'url', 'domain', 'email']
@@ -86,7 +86,7 @@ def tag_initial():
             result = text.get(str(linenumber) + '.' + str(m.start()), str(linenumber) + '.' + str(m.end()))
             end = m.end()
             #drop trailing punctuation
-            while (u'.,\u201d"\'\u2019').find(result[len(result)-1:len(result)]) != -1:
+            while ('.,\u201d"\'\u2019').find(result[len(result)-1:len(result)]) != -1:
                 result = result[:len(result)-1]
                 end -= 1
             text.tag_add('url',str(linenumber) + '.' + str(m.start()), str(linenumber) + '.' + str(end))
@@ -191,7 +191,7 @@ def export_console():
     #need better way to iterate through highlights and remove brackets
     for t in tags:
         indicators = []
-        print(t + ':')
+        print((t + ':'))
         myhighlights = text.tag_ranges(t)
         mystart = 0
         for h in myhighlights:
@@ -383,7 +383,7 @@ def export_openioc():
                             indicator_nodes.append(indicator_node)
                             temp_indicators.append(value)
                     else:
-                        print 'Unknown tag encountered [%s]' % str(tag)
+                        print('Unknown tag encountered [%s]' % str(tag))
                     mystart = 0
     
     if len(indicator_nodes) > 0:
